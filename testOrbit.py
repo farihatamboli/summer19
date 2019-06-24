@@ -24,10 +24,10 @@ cursor = cnx.cursor()
 #connect to database
 def _connect():
     config = {
-        'user': 'root',
-        'password': 'BrynMawr',
-        'host': '127.0.0.1',
-        'database': 'sys',
+        'user': 'USER',
+        'password': 'PASSWORD',
+        'host': 'IP',
+        'database': 'DB',
         #'raise_on_warnings': True,
     }
     cnx = None
