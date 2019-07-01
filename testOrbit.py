@@ -269,5 +269,42 @@ Main()
 #         current_bucket_file_counter+=1
 # =============================================================================
     
-    
+    def Main():
+    datadir = '/Users/Tamboli/Documents/data/sample_trajectory_files/'
+    max_file_count = 100
+    if len(sys.argv) > 1:
+        max_file_count = int(sys.argv[1]) #number of files in each result file
+    input_files = [file for file in os.listdir(datadir) if os.path.isfile(os.path.join(datadir, file)) and (file.endswith('.h5') or file.endswith('hdf5'))]
+    #total_input_files_count = len(input_files)     #total number of input files
+
+    datadir_processed = '/Users/Tamboli/Documents/data/processed/'
+    datadir_output = '/Users/Tamboli/Documents/data/results/'
+    if not os.path.exists(datadir_output):
+        os.makedirs(datadir_output)
+    if not os.path.exists(datadir_processed):
+        os.makedirs(datadir_processed)
+
+    current_bucket_counter = 0
+    result_file = 'results_' + str(current_bucket_counter) + '.hdf5'
+    current_bucket = h5py.File(os.path.join(datadir_output, result_file), "a")
+    current_bucket_file_counter = 0
+
+    for file_name in input_files:
+        if current_bucket_file_counter >= max_file_count:
+            current_bucket.close()
+            current_bucket_counter += 1
+            result_file = 'results_' + str(current_bucket_counter) + '.hdf5'
+            current_bucket = h5py.File(os.path.join(datadir_output, result_file), "a")
+            current_bucket_file_counter = 0
+        #print(file_name)
+        #print(datadir)
+        read(datadir, file_name)
+        #insert(cursor)
+        #movefile(os.path.join(datadir, file_name), os.path.join(datadir_processed, file_name))
+        current_bucket_file_counter+=1
+        
+        print (__name__)
+
+if __name__ == "__main__":
+   Main()
 
